@@ -3,20 +3,39 @@ import { useState } from "react";
 
 function App() {
     const [name, setName] = useState("Sofía")
-    const [newName] = ""
+    const [newName, setNewName] = useState(" ")
 
-    function updateName () {
-
+    const handleChangeName = (teacherName) => {
+        setName(teacherName)
     }
+
+    const changeName = (e) =>{
+       e.preventDefault() // evitar la recarga de la página 
+       //newName ? setName(newName) : null
+       if (newName.trim()){
+        setName(newName)
+        setNewName("")
+       }
+    }
+
     return (
-        <div>
+        <>
             <h2>Teacher Name: {name} </h2>
             <ul>
-                <li onClick={()=>setName("Data")}>Data</li>
-                <li onClick={()=>setName("Reyes")}>Reyes</li>
-                <li onClick={()=>setName("Soraya")}>Soraya</li>
+                <li onClick={()=>handleChangeName("Data")}>Data</li>
+                <li onClick={()=>handleChangeName("Reyes")}>Reyes</li>
+                <li onClick={()=>handleChangeName("Soraya")}>Soraya</li>
             </ul>
-        </div>
+
+            <form onSubmit={changeName}>
+                <input 
+                    type="text" 
+                    placeholder="add a name"  
+                    value={newName} 
+                    onChange={(e)=>setNewName(e.target.value)} />
+                <button type='submit'>Add</button>
+            </form>
+        </>
     );
 }
 
